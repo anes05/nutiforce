@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produits — Nutriforce</title>
+  <link rel='dns-prefetch' href='//fonts.googleapis.com' />
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap' media='all' />
+  <link rel='stylesheet' href='http://www.nutriforce.com.tn/wp-content/themes/nutrition-pak/style.css?ver=1.0.0' media='all' />
+  <style>
+    /* ── Page-hero banner ── */
+    .products-hero {
+      background: linear-gradient(135deg, #3d1272 0%, #5a1fa8 60%, #7b3cc0 100%);
+      padding: 72px 24px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .products-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 80%, rgba(0,184,217,.12) 0%, transparent 45%),
+        radial-gradient(circle at 85% 20%, rgba(245,211,0,.07) 0%, transparent 40%);
+      pointer-events: none;
+    }
+    .products-hero-inner { position: relative; max-width: 700px; margin: 0 auto; }
+    .products-hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      margin: 0 0 14px;
+    }
+    .products-hero h1 em { color: #00b8d9; font-style: normal; }
+    .products-hero p {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.05rem;
+      color: rgba(255,255,255,.72);
+      margin: 0;
+      line-height: 1.7;
+    }
+    .breadcrumb {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .82rem;
+      color: rgba(255,255,255,.5);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .breadcrumb a { color: rgba(255,255,255,.65); text-decoration: none; }
+    .breadcrumb a:hover { color: #00b8d9; }
+    .breadcrumb span { opacity: .4; }
+
+    /* ── Filter bar ── */
+    .filter-bar {
+      background: #fff;
+      border-bottom: 1px solid #e0d6f0;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 70px;
+      z-index: 90;
+    }
+    .filter-btn {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .82rem;
+      font-weight: 700;
+      padding: 7px 18px;
+      border-radius: 999px;
+      border: 1.5px solid #e0d6f0;
+      background: transparent;
+      color: #6b6b80;
+      cursor: pointer;
+      transition: all .22s ease;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: #5a1fa8;
+      border-color: #5a1fa8;
+      color: #fff;
+    }
+    .filter-count {
+      font-size: .75rem;
+      font-weight: 600;
+      color: #6b6b80;
+      font-family: 'Montserrat', sans-serif;
+      margin-left: auto;
+    }
+  </style>
+</head>
+<body class="archive post-type-archive post-type-archive-nutrition_product wp-theme-nutrition-pak">
+
+<!-- ═══════════════════════════════════════════════════════════
+     HEADER
+     ═══════════════════════════════════════════════════════════ -->
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <div class="site-logo">
+      <a href="index.html" rel="home">
+        <span class="logo-text">Nutriforce</span>
+      </a>
+    </div>
+    <nav class="nav-primary" role="navigation" aria-label="Menu principal">
+      <ul class="primary-menu">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="produits.html" class="active">Produits</a></li>
+        <li><a href="a-propos.html">À propos</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE HERO
+     ═══════════════════════════════════════════════════════════ -->
+<div class="products-hero">
+  <div class="products-hero-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Accueil</a>
+      <span>›</span>
+      <span>Produits</span>
+    </div>
+    <h1>Nos <em>Produits</em></h1>
+    <p>Découvrez notre gamme complète de compléments nutritionnels formulés pour des performances optimales.</p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     FILTER BAR
+     ═══════════════════════════════════════════════════════════ -->
+<div class="filter-bar" id="filterBar">
+  <button class="filter-btn active" data-filter="all">Tous</button>
+  <button class="filter-btn" data-filter="proteine">Protéines</button>
+  <button class="filter-btn" data-filter="acides-amines">Acides Aminés</button>
+  <button class="filter-btn" data-filter="force">Force & Énergie</button>
+  <button class="filter-btn" data-filter="sante">Santé & Bien-être</button>
+  <span class="filter-count" id="filterCount">12 produits</span>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PRODUCTS GRID
+     ═══════════════════════════════════════════════════════════ -->
+<section class="section products-section">
+  <div class="container">
+    <div class="products-grid" id="productsGrid">
+
+      <!-- 80 Whey Protein -->
+      <article class="product-card" data-category="proteine">
+        <div class="product-card-image">
+          <img src="images/WhatsApp-Image-2026-06-05-at-14.34.24.jpeg"
+               alt="80 Whey Protein" loading="lazy">
+        </div>
+        <div class="product-card-body">
+          <h3 class="product-name">
+            <a href="produits/80-whey-protein.html">80 Whey Protein</a>
+          </h3>
+          <div class="product-specs"></div>
+        </div>
+        <div class="product-card-footer">
+          <div class="product-price">
+            <span class="price-label">Prix</span>
+            <span class="price-value" style="font-size:1rem;color:var(--color-gray);">Consulter</span>
+          </div>
+          <a href="produits/80-whey-protein.html" class="btn-details">
+            Détails <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 80 WHEY Protein 908g -->
+      <article class="product-card" data-category="proteine">
+        <div class="product-card-image">
+          <img src="images/WhatsApp-Image-2026-06-05-at-14.34.24-1.jpeg"
+               alt="80 WHEY Protein 908g" loading="lazy">
+        </div>
+        <div class="product-card-body">
+          <h3 class="product-name">
+            <a href="produits/80-whey-protein-908g.html">80 WHEY Protein 908g</a>
+          </h3>
+          <div class="product-specs"></div>
+        </div>
+        <div class="product-card-footer">
+          <div class="product-price">
+            <span class="price-label">Prix</span>
+            <span class="price-value" style="font-size:1rem;color:var(--color-gray);">Consulter</span>
+          </div>
+          <a href="produits/80-whey-protein-908g.html" class="btn-details">
+            Détails <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- WHEY -->
+      <article class="product-card" data-category="proteine">
+        <div class="product-card-image">
+          <img src="images/WhatsApp-Image-2026-06-05-at-14.34.21-1.jpeg"
+               alt="WHEY" loading="lazy">
+        </div>
+        <div class="product-card-body">
+          <h3 class="product-name">
+            <a href="produits/whey.html">WHEY</a>
+          </h3>
+          <div class="product-specs"></div>
+        </div>
+        <div class="product-card-footer">
+          <div class="product-price">
+            <span class="price-label">Prix</span>
+            <span class="price-value" style="font-size:1rem;color:var(--color-gray);">Consulter</span>
+          </div>
+          <a href="produits/whey.html" class="btn-details">
+            Détails <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- MASS -->
+      <article class="product-card" data-category="proteine">
+        <div class="product-card-image">
+          <img src="images/WhatsApp-Image-2026-06-05-at-14.34.21.jpeg"
+               alt="MASS" loading="lazy">
+        </div>
+        <div class="product-card-body">
+          <h3 class="product-name">
+            <a href="produits/mass.html">MASS</a>
+          </h3>
+          <div class="product-specs"></div>
+        </div>
+        <div class="product-card-footer">
+          <div class="product-price">
+            <span class="price-label">Prix</span>
+            <span class="price-value" style="font-size:1rem;color:var(--color-gray);">Consulter</span>
+          </div>
+          <a href="produits/mass.html" class="btn-details">
+            Détails <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- EAA -->
+      <article class="product-card" data-category="acides-amines">
+        <div class="product-card-image">
+          <img src="images/WhatsApp-Image-2026-06-05-at-14.34.20-1.jpeg"
+               alt="EAA" loading="lazy">
+        </div>
+        <div class="product-card-body">
+          <h3 class="product-name">
+            <a href="produits/eaa.html">EAA</a>
+          </h3>
+          <div class="product-specs"></div>
+        </div>
+        <div class="product-card-footer">
+          <div class="product-price">
+            <span class="price-label">Prix</span>
+            <span class="price-value" style="font-size:1rem;color:var(--color-gray);">Consulter</span>
+          </div>
+          <a href="produits/eaa.html" class="btn-details">
+            Détails <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- BCAA -->
+      <article class="product-card" data-category="acides-amines">
+        <div class="product-card-image">
+          <img src="images/WhatsApp-Image-2026-06-05-at-14.34.25.jpeg"
+               alt="BCAA" loading="lazy">
+        </div>
+        <div class="product-card-body">
+          <h3 class="product-name">
+            <a href="produits/bcaa.html">BCAA</a>
+          </h3>
+          <div class="product-specs"></div>
+        </div>
+        <div class="product-card-footer">
+          <div class="product-price">
+            <span class="price-label">Prix</span>
+            <span class="price-value" style="font-size:1rem;color:var(--color-gray);">Consulter</span>
+          </div>
+          <a href="produits/bcaa.html" class="btn-details">
+            Détails <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Citrulline -->
+      <article class="product-card" data-category="acides-amines">
+        <div class="product-card-image">
+          <img src="images/WhatsApp-Image-2026-06-05-at-14.34.26.jpeg"
+               alt="Citrulline" loading="lazy">
+        </div>
+        <div class="product-card-body">
+          <h3 class="product-name">
+            <a href="produits/citrulline.html">Citrulline</a>
+          </h3>
+          <div class="product-specs"></div>
+        </div>
+        <div class="product-card-footer">
+          <div class="product-price">
+            <span class="price-label">Prix</span>
+            <span class="price-value" style="font-size:1rem;color:var(--color-gray);">Consulter</span>
+          </div>
+          <a href="produits/citrulline.html" class="btn-details">
+            Détails <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Creatine -->
+      <article class="product-card" data-category="force">
+        <div class="product-card-image">
+          <img src="images/Media.jpeg"
+               alt="Creatine" loading="lazy">
+        </div>
+        <div class="product-card-body">
+          <h3 class="product-name">
+            <a href="produits/6-pack-creatine.html">Creatine</a>
+          </h3>
+          <div class="product-specs"></div>
+        </div>
+        <div class="product-card-footer">
+          <div class="product-price">
+            <span class="price-label">Prix</span>
+            <span class="price-value" style="font-size:1rem;color:var(--color-gray);">Consulter</span>
+          </div>
+          <a href="produits/6-pack-creatine.html" class="btn-details">
+            Détails <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Creatine 100 portions -->
+      <article class="product-card" data-category="force">
+        <div class="product-card-image">
+          <img src="images/WhatsApp-Image-2026-06-05-at-14.34.20.jpeg"
+               alt="Creatine 100 portions" loading="lazy">
+        </div>
+        <div class="product-card-body">
+          <h3 class="product-name">
+            <a href="produits/creatine-100-portions.html">Creatine 100 portions</a>
+          </h3>
+          <div class="product-specs"></div>
+        </div>
+        <div class="product-card-footer">
+          <div class="product-price">
+            <span class="price-label">Prix</span>
+            <span class="price-value" style="font-size:1rem;color:var(--color-gray);">Consulter</span>
+          </div>
+          <a href="produits/creatine-100-portions.html" class="btn-details">
+            Détails <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- OMEGA 3 -->
+      <article class="product-card" data-category="sante">
+        <div class="product-card-image">
+          <img src="images/WhatsApp-Image-2026-06-05-at-14.34.22.jpeg"
+               alt="OMEGA 3" loading="lazy">
+        </div>
+        <div class="product-card-body">
+          <h3 class="product-name">
+            <a href="produits/omega-3.html">OMEGA 3</a>
+          </h3>
+          <div class="product-specs"></div>
+        </div>
+        <div class="product-card-footer">
+          <div class="product-price">
+            <span class="price-label">Prix</span>
+            <span class="price-value" style="font-size:1rem;color:var(--color-gray);">Consulter</span>
+          </div>
+          <a href="produits/omega-3.html" class="btn-details">
+            Détails <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Tribulus Terrestris -->
+      <article class="product-card" data-category="sante">
+        <div class="product-card-image">
+          <img src="images/WhatsApp-Image-2026-06-05-at-14.34.23.jpeg"
+               alt="Tribulus Terrestris" loading="lazy">
+        </div>
+        <div class="product-card-body">
+          <h3 class="product-name">
+            <a href="produits/tribulus-terrestris.html">Tribulus Terrestris</a>
+          </h3>
+          <div class="product-specs"></div>
+        </div>
+        <div class="product-card-footer">
+          <div class="product-price">
+            <span class="price-label">Prix</span>
+            <span class="price-value" style="font-size:1rem;color:var(--color-gray);">Consulter</span>
+          </div>
+          <a href="produits/tribulus-terrestris.html" class="btn-details">
+            Détails <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- VIT. C+ZINK Bioflavonoides -->
+      <article class="product-card" data-category="sante">
+        <div class="product-card-image">
+          <img src="images/WhatsApp-Image-2026-06-05-at-14.34.23-1.jpeg"
+               alt="VIT. C+ZINK Bioflavonoides" loading="lazy">
+        </div>
+        <div class="product-card-body">
+          <h3 class="product-name">
+            <a href="produits/vit-czink-bioflavonoides.html">VIT. C+ZINK Bioflavonoides</a>
+          </h3>
+          <div class="product-specs"></div>
+        </div>
+        <div class="product-card-footer">
+          <div class="product-price">
+            <span class="price-label">Prix</span>
+            <span class="price-value" style="font-size:1rem;color:var(--color-gray);">Consulter</span>
+          </div>
+          <a href="produits/vit-czink-bioflavonoides.html" class="btn-details">
+            Détails <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+
+    </div><!-- /products-grid -->
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════════════════ -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo-text">Nutriforce</span>
+      <p>Des compléments nutritionnels de haute qualité pour sportifs exigeants. Formulés avec des ingrédients premium pour des résultats optimaux.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-btn" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="YouTube">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Produits</h4>
+      <ul>
+        <li><a href="produits.html">Tous les produits</a></li>
+        <li><a href="produits.html">Protéines</a></li>
+        <li><a href="produits.html">Acides Aminés</a></li>
+        <li><a href="produits.html">Force &amp; Énergie</a></li>
+        <li><a href="produits.html">Santé &amp; Bien-être</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Informations</h4>
+      <ul>
+        <li><a href="a-propos.html">À propos de nous</a></li>
+        <li><a href="a-propos.html">Notre laboratoire</a></li>
+        <li><a href="a-propos.html">Certifications</a></li>
+        <li><a href="blog.html">Blog &amp; Conseils</a></li>
+        <li><a href="contact.html">Nous contacter</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Légal</h4>
+      <ul>
+        <li><a href="mentions-legales.html">Mentions légales</a></li>
+        <li><a href="politique-confidentialite.html">Politique de confidentialité</a></li>
+        <li><a href="cookies.html">Politique cookies</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom container">
+    <span>&copy; 2026 Nutriforce. Tous droits réservés.</span>
+    <span>Compléments alimentaires — Non destiné aux personnes de moins de 18 ans.</span>
+  </div>
+</footer>
+
+
+<script src="http://www.nutriforce.com.tn/wp-content/themes/nutrition-pak/assets/js/main.js?ver=1.0.0"></script>
+
+<script>
+/* Filter bar */
+(function () {
+  var btns   = document.querySelectorAll('.filter-btn');
+  var cards  = document.querySelectorAll('.product-card');
+  var count  = document.getElementById('filterCount');
+
+  function applyFilter(filter) {
+    btns.forEach(function (b) { b.classList.remove('active'); });
+    var active = document.querySelector('.filter-btn[data-filter="' + filter + '"]');
+    if (active) active.classList.add('active');
+
+    var visible = 0;
+    cards.forEach(function (card) {
+      var show = filter === 'all' || card.dataset.category === filter;
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    count.textContent = visible + ' produit' + (visible > 1 ? 's' : '');
+  }
+
+  btns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      applyFilter(btn.dataset.filter);
+      history.replaceState(null, '', '#' + btn.dataset.filter);
+    });
+  });
+
+  /* Apply filter from URL hash on page load */
+  var hash = window.location.hash.replace('#', '');
+  if (hash && document.querySelector('.filter-btn[data-filter="' + hash + '"]')) {
+    applyFilter(hash);
+    /* Scroll past the sticky header after a short delay */
+    setTimeout(function () {
+      var bar = document.getElementById('filterBar');
+      if (bar) bar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 120);
+  }
+}());
+</script>
+
+</body>
+</html>

@@ -1,0 +1,878 @@
+<title>Nutriforce</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap">
+
+<style>
+/* ── TOKENS ── */
+:root {
+  --purple:      #5a1fa8;
+  --purple-dk:   #3d1272;
+  --purple-lt:   #7b3cc0;
+  --cyan:        #00b8d9;
+  --cyan-dk:     #0090b0;
+  --yellow:      #f5d300;
+  --bg:          #ffffff;
+  --bg-lt:       #f4f0fa;
+  --fg:          #1a0a30;
+  --fg-m:        #6b6b80;
+  --border:      #e0d6f0;
+  --r:           12px;
+  --r-lg:        24px;
+  --shadow:      0 4px 24px rgba(90,31,168,.13);
+  --shadow-h:    0 8px 40px rgba(90,31,168,.25);
+  --t:           .28s cubic-bezier(.4,0,.2,1);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #130826; --bg-lt: #1c0d36; --fg: #f0eaf8; --fg-m: #a89cbc;
+    --border: #3a2558; --shadow: 0 4px 24px rgba(0,0,0,.5);
+    --shadow-h: 0 8px 40px rgba(0,0,0,.65); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #130826; --bg-lt: #1c0d36; --fg: #f0eaf8; --fg-m: #a89cbc;
+  --border: #3a2558; --shadow: 0 4px 24px rgba(0,0,0,.5);
+  --shadow-h: 0 8px 40px rgba(0,0,0,.65); color-scheme: dark;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Montserrat','Segoe UI',Arial,sans-serif;
+  background:var(--bg);color:var(--fg);line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--purple);text-decoration:none;transition:color var(--t)}
+a:hover{color:var(--cyan)}
+ul{list-style:none}
+h2{font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:800;line-height:1.2;color:var(--fg)}
+h3{font-size:1.1rem;font-weight:800;line-height:1.25;color:var(--fg)}
+p{margin-bottom:1rem}
+p:last-child{margin-bottom:0}
+
+.container{
+  max-width:1200px;margin:0 auto;
+  padding-left:max(24px,env(safe-area-inset-left,0px));
+  padding-right:max(24px,env(safe-area-inset-right,0px));
+}
+.section{padding:80px 0}
+.section-title{text-align:center;margin-bottom:12px}
+.section-title::after{
+  content:'';display:block;width:64px;height:4px;
+  background:linear-gradient(90deg,var(--cyan),var(--yellow));
+  border-radius:2px;margin:14px auto 0;
+}
+.section-subtitle{text-align:center;color:var(--fg-m);margin-bottom:48px;font-size:1.05rem}
+.text-center{text-align:center}
+
+/* ── BUTTONS ── */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 30px;border-radius:50px;font-weight:700;
+  font-size:.9rem;cursor:pointer;border:2px solid transparent;
+  transition:all var(--t);text-transform:uppercase;letter-spacing:.05em;
+  font-family:inherit;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--cyan),var(--cyan-dk));
+  color:#fff;border-color:var(--cyan);
+}
+.btn-primary:hover{
+  background:linear-gradient(135deg,var(--cyan-dk),var(--cyan));
+  color:#fff;transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(0,184,217,.35);
+}
+.btn-outline{background:transparent;color:rgba(255,255,255,.9);border-color:rgba(255,255,255,.5)}
+.btn-outline:hover{background:rgba(255,255,255,.12);color:#fff}
+
+/* ── HEADER ── */
+.site-header{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:1000;
+  background:linear-gradient(135deg,var(--purple-dk) 0%,var(--purple) 100%);
+  box-shadow:0 2px 20px rgba(61,18,114,.4);
+}
+.header-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-block:15px;
+  padding-left:max(24px,env(safe-area-inset-left,0px));
+  padding-right:max(24px,env(safe-area-inset-right,0px));
+  max-width:1200px;margin:0 auto;
+}
+.logo-text{font-size:1.5rem;font-weight:900;color:#fff;letter-spacing:.08em;text-transform:uppercase}
+.logo-text em{color:var(--cyan);font-style:normal}
+.nav-primary ul{display:flex;align-items:center;gap:2px}
+.nav-primary a{
+  color:rgba(255,255,255,.8);font-weight:600;padding:8px 15px;
+  border-radius:50px;font-size:.88rem;text-transform:uppercase;
+  letter-spacing:.05em;transition:all var(--t);
+}
+.nav-primary a:hover,.nav-primary a.active{background:rgba(255,255,255,.14);color:#fff}
+.nav-toggle{
+  display:none;flex-direction:column;gap:5px;cursor:pointer;
+  background:none;border:none;padding:8px;
+}
+.nav-toggle span{display:block;width:26px;height:2px;background:#fff;border-radius:2px;transition:all var(--t)}
+.nav-toggle.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.mobile-nav{
+  background:linear-gradient(135deg,var(--purple-dk),var(--purple));
+  overflow:hidden;max-height:0;transition:max-height .35s cubic-bezier(.4,0,.2,1);
+}
+.mobile-nav.open{max-height:280px}
+.mobile-nav a{
+  display:block;padding:13px max(24px,env(safe-area-inset-left,0px));
+  color:rgba(255,255,255,.8);font-weight:600;font-size:.9rem;
+  text-transform:uppercase;letter-spacing:.05em;
+  border-top:1px solid rgba(255,255,255,.08);transition:background var(--t);
+}
+.mobile-nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+
+/* ── HERO SLIDER ── */
+.hero-slider{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--purple-dk) 0%,var(--purple) 60%,var(--purple-lt) 100%);
+  min-height:540px;
+}
+.hero-slider::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 15% 60%,rgba(255,255,255,.03) 0%,transparent 50%),
+    radial-gradient(circle at 85% 20%,rgba(0,184,217,.07) 0%,transparent 40%);
+}
+.slides-wrapper{display:flex;transition:transform .65s cubic-bezier(.4,0,.2,1)}
+.slide{min-width:100%;display:flex;align-items:center;padding:56px 0 76px}
+.slide-inner{
+  display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;
+  max-width:1200px;margin:0 auto;width:100%;
+  padding-left:max(24px,env(safe-area-inset-left,0px));
+  padding-right:max(24px,env(safe-area-inset-right,0px));
+}
+.slide-content{color:#fff}
+.slide-badge{
+  display:inline-block;background:var(--yellow);color:var(--fg);
+  font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;
+  padding:5px 14px;border-radius:50px;margin-bottom:16px;
+}
+.slide-title{
+  font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;color:#fff;
+  line-height:1.1;margin-bottom:16px;text-transform:uppercase;text-wrap:balance;
+}
+.slide-subtitle{
+  font-size:1rem;color:rgba(255,255,255,.72);margin-bottom:28px;
+  font-weight:500;line-height:1.65;max-width:46ch;
+}
+.slide-actions{display:flex;gap:12px;flex-wrap:wrap}
+.slide-image{display:flex;justify-content:center;align-items:center}
+.hero-bottle{
+  animation:float 4s ease-in-out infinite;
+  filter:drop-shadow(0 20px 40px rgba(0,0,0,.4));
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+@media(prefers-reduced-motion:reduce){
+  .hero-bottle{animation:none}
+  .slides-wrapper{transition:none}
+}
+
+.slider-controls{
+  position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
+  display:flex;gap:10px;z-index:10;
+}
+.slider-dot{
+  width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.35);
+  cursor:pointer;transition:all var(--t);border:none;padding:0;
+}
+.slider-dot.active{background:var(--cyan);transform:scale(1.3)}
+.slider-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);
+  background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.22);
+  color:#fff;width:50px;height:50px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all var(--t);z-index:10;backdrop-filter:blur(8px);
+}
+.slider-arrow:hover{background:var(--cyan);border-color:var(--cyan)}
+.slider-arrow.prev{left:max(16px,env(safe-area-inset-left,0px))}
+.slider-arrow.next{right:max(16px,env(safe-area-inset-right,0px))}
+
+/* ── STATS ── */
+.stats-bar{
+  background:linear-gradient(135deg,var(--cyan-dk),var(--cyan));
+  padding:32px 0;
+}
+.stats-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
+  max-width:1200px;margin:0 auto;
+  padding-left:max(24px,env(safe-area-inset-left,0px));
+  padding-right:max(24px,env(safe-area-inset-right,0px));
+}
+.stat-item{text-align:center;color:#fff}
+.stat-number{font-size:2rem;font-weight:900;display:block;line-height:1;margin-bottom:4px;font-variant-numeric:tabular-nums}
+.stat-label{font-size:.8rem;opacity:.85;text-transform:uppercase;letter-spacing:.08em}
+
+/* ── PRODUCTS ── */
+.products-section{background:var(--bg-lt)}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px}
+.product-card{
+  background:var(--bg);border-radius:var(--r-lg);overflow:hidden;
+  box-shadow:var(--shadow);transition:all var(--t);display:flex;flex-direction:column;
+}
+.product-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-h)}
+.product-card-img{
+  background:linear-gradient(135deg,var(--purple-dk) 0%,var(--purple) 60%,var(--purple-lt) 100%);
+  display:flex;justify-content:center;align-items:center;
+  min-height:200px;overflow:hidden;padding:16px;
+}
+.product-card-img svg{transition:transform var(--t)}
+.product-card:hover .product-card-img svg{transform:scale(1.07) translateY(-4px)}
+.product-card-body{padding:18px 20px;flex:1}
+.product-name{font-size:1rem;font-weight:800;color:var(--fg);line-height:1.3}
+.product-name a{color:var(--fg)}
+.product-name a:hover{color:var(--purple)}
+.product-card-foot{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 20px;border-top:1px solid var(--border);
+}
+.price-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-m)}
+.price-value{font-size:.88rem;color:var(--fg-m);font-weight:600}
+.btn-details{
+  display:inline-flex;align-items:center;gap:5px;padding:8px 16px;
+  border-radius:50px;font-weight:700;font-size:.78rem;background:var(--purple);
+  color:#fff;text-transform:uppercase;letter-spacing:.05em;transition:all var(--t);
+}
+.btn-details svg{width:13px;height:13px;flex-shrink:0}
+.btn-details:hover{background:var(--purple-lt);color:#fff;transform:translateX(2px)}
+
+/* ── FEATURES ── */
+.features-section{
+  background:linear-gradient(135deg,var(--purple-dk) 0%,var(--purple) 100%);
+  position:relative;overflow:hidden;
+}
+.features-section::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 10% 90%,rgba(0,184,217,.1) 0%,transparent 45%),
+    radial-gradient(circle at 90% 10%,rgba(245,211,0,.06) 0%,transparent 40%);
+}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;position:relative}
+.feature-item{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--r-lg);padding:36px 28px;text-align:center;transition:all var(--t);
+}
+.feature-item:hover{background:rgba(255,255,255,.11);transform:translateY(-4px)}
+.feature-icon{font-size:2.4rem;margin-bottom:16px;display:block}
+.feature-item h3{color:#fff;margin-bottom:10px}
+.feature-item p{color:rgba(255,255,255,.65);font-size:.93rem}
+
+/* ── TESTIMONIALS ── */
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.testimonial-card{
+  background:var(--bg);border-radius:var(--r-lg);padding:28px;
+  box-shadow:var(--shadow);transition:all var(--t);
+  display:flex;flex-direction:column;border:1px solid var(--border);
+}
+.testimonial-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-h)}
+.testimonial-stars{display:flex;gap:3px;margin-bottom:14px;color:var(--yellow);font-size:1rem}
+.testimonial-text{font-size:.93rem;color:var(--fg-m);flex:1;margin-bottom:20px;font-style:italic;line-height:1.7}
+.testimonial-author{display:flex;align-items:center;gap:12px}
+.testimonial-avatar{
+  width:44px;height:44px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--purple),var(--cyan));
+  color:#fff;font-weight:800;font-size:1.1rem;
+  display:flex;align-items:center;justify-content:center;
+}
+.testimonial-name{font-weight:700;font-size:.93rem;color:var(--fg)}
+.testimonial-role{font-size:.78rem;color:var(--fg-m)}
+
+/* ── FOOTER ── */
+.site-footer{background:var(--purple-dk);padding-top:60px}
+.footer-grid{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;
+  max-width:1200px;margin:0 auto;
+  padding-left:max(24px,env(safe-area-inset-left,0px));
+  padding-right:max(24px,env(safe-area-inset-right,0px));
+}
+.footer-logo{font-size:1.4rem;font-weight:900;color:#fff;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:14px}
+.footer-logo em{color:var(--cyan);font-style:normal}
+.footer-brand p{font-size:.88rem;color:rgba(255,255,255,.58);line-height:1.7;max-width:34ch}
+.footer-socials{display:flex;gap:10px;margin-top:20px}
+.social-btn{
+  width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.65);
+  display:flex;align-items:center;justify-content:center;transition:all var(--t);
+}
+.social-btn:hover{background:var(--cyan);border-color:var(--cyan);color:#fff}
+.footer-col h4{color:#fff;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:18px;font-weight:800}
+.footer-col ul{display:flex;flex-direction:column;gap:10px}
+.footer-col a{color:rgba(255,255,255,.58);font-size:.88rem;transition:color var(--t)}
+.footer-col a:hover{color:var(--cyan)}
+.footer-bottom{
+  margin-top:48px;padding-block:20px;border-top:1px solid rgba(255,255,255,.08);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:8px;font-size:.8rem;color:rgba(255,255,255,.38);
+  max-width:1200px;margin-left:auto;margin-right:auto;
+  padding-left:max(24px,env(safe-area-inset-left,0px));
+  padding-right:max(24px,env(safe-area-inset-right,0px));
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .slide-inner{grid-template-columns:1fr;gap:28px;text-align:center}
+  .slide-actions{justify-content:center}
+  .slide-image{order:-1}
+  .slide-subtitle{max-width:100%}
+  .hero-slider{min-height:unset}
+  .slide{padding:44px 0 68px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .features-grid{grid-template-columns:1fr}
+  .testimonials-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
+}
+@media(max-width:640px){
+  .nav-primary{display:none}
+  .nav-toggle{display:flex}
+  .products-grid{grid-template-columns:repeat(2,1fr);gap:14px}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;align-items:flex-start}
+  .slider-arrow{width:40px;height:40px}
+}
+@media(max-width:420px){
+  .products-grid{grid-template-columns:1fr}
+}
+</style>
+
+<!-- ═══════════════════════════════════════
+     HEADER
+     ═══════════════════════════════════════ -->
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <a href="#" class="site-logo"><span class="logo-text">Nutri<em>force</em></span></a>
+    <nav class="nav-primary" role="navigation" aria-label="Menu principal">
+      <ul>
+        <li><a href="#" class="active">Accueil</a></li>
+        <li><a href="#">Produits</a></li>
+        <li><a href="#">À propos</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="mobile-nav" id="mobileNav" aria-hidden="true">
+    <a href="#">Accueil</a>
+    <a href="#">Produits</a>
+    <a href="#">À propos</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>
+
+<!-- ═══════════════════════════════════════
+     HERO SLIDER
+     ═══════════════════════════════════════ -->
+<section class="hero-slider" aria-label="Slider produits">
+  <button class="slider-arrow prev" id="sliderPrev" aria-label="Précédent">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+
+  <div class="slides-wrapper" id="slidesWrapper">
+
+    <!-- Slide 1: Creatine -->
+    <div class="slide" role="group" aria-label="Diapositive 1 sur 4">
+      <div class="slide-inner">
+        <div class="slide-content">
+          <span class="slide-badge">Bestseller</span>
+          <h2 class="slide-title">Créatine</h2>
+          <p class="slide-subtitle">La créatine est un complément alimentaire phare en musculation. Elle agit comme une réserve d'énergie pour vos muscles lors des efforts explosifs.</p>
+          <div class="slide-actions">
+            <a href="#" class="btn btn-primary">Voir le produit <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <a href="#" class="btn btn-outline">Tous les produits</a>
+          </div>
+        </div>
+        <div class="slide-image">
+          <svg class="hero-bottle" viewBox="0 0 220 300" width="220" height="300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="22" y="68" width="176" height="210" rx="22" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+            <rect x="38" y="20" width="144" height="56" rx="12" fill="#00b8d9" stroke="#0090b0" stroke-width="1.5"/>
+            <text x="110" y="54" text-anchor="middle" fill="white" font-size="13" font-weight="800" letter-spacing="2" font-family="Montserrat,sans-serif">NUTRIFORCE</text>
+            <rect x="32" y="100" width="156" height="150" rx="12" fill="rgba(255,255,255,.09)"/>
+            <text x="110" y="142" text-anchor="middle" fill="rgba(255,255,255,.4)" font-size="9" font-weight="700" letter-spacing="3.5" font-family="Montserrat,sans-serif">COMPLÉMENT</text>
+            <text x="110" y="192" text-anchor="middle" fill="white" font-size="29" font-weight="900" font-family="Montserrat,sans-serif">CREATINE</text>
+            <line x1="52" y1="208" x2="168" y2="208" stroke="#00b8d9" stroke-width="1.5"/>
+            <text x="110" y="230" text-anchor="middle" fill="rgba(255,255,255,.4)" font-size="9" font-weight="600" letter-spacing="3" font-family="Montserrat,sans-serif">PERFORMANCE</text>
+            <circle cx="68" cy="268" r="5" fill="rgba(0,184,217,.2)"/>
+            <circle cx="110" cy="268" r="5" fill="rgba(0,184,217,.4)"/>
+            <circle cx="152" cy="268" r="5" fill="rgba(0,184,217,.2)"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2: EAA -->
+    <div class="slide" role="group" aria-label="Diapositive 2 sur 4">
+      <div class="slide-inner">
+        <div class="slide-content">
+          <span class="slide-badge">Acides Aminés</span>
+          <h2 class="slide-title">EAA</h2>
+          <p class="slide-subtitle">Les acides aminés essentiels favorisent la synthèse protéique, améliorent la récupération et préviennent le catabolisme musculaire.</p>
+          <div class="slide-actions">
+            <a href="#" class="btn btn-primary">Voir le produit <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <a href="#" class="btn btn-outline">Tous les produits</a>
+          </div>
+        </div>
+        <div class="slide-image">
+          <svg class="hero-bottle" viewBox="0 0 220 300" width="220" height="300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="22" y="68" width="176" height="210" rx="22" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+            <rect x="38" y="20" width="144" height="56" rx="12" fill="#f5d300" stroke="#c9ab00" stroke-width="1.5"/>
+            <text x="110" y="54" text-anchor="middle" fill="#1a0a30" font-size="13" font-weight="800" letter-spacing="2" font-family="Montserrat,sans-serif">NUTRIFORCE</text>
+            <rect x="32" y="100" width="156" height="150" rx="12" fill="rgba(255,255,255,.09)"/>
+            <text x="110" y="142" text-anchor="middle" fill="rgba(255,255,255,.4)" font-size="9" font-weight="700" letter-spacing="3.5" font-family="Montserrat,sans-serif">ACIDES AMINÉS</text>
+            <text x="110" y="200" text-anchor="middle" fill="white" font-size="46" font-weight="900" font-family="Montserrat,sans-serif">EAA</text>
+            <line x1="52" y1="214" x2="168" y2="214" stroke="#f5d300" stroke-width="1.5"/>
+            <text x="110" y="236" text-anchor="middle" fill="rgba(255,255,255,.4)" font-size="9" font-weight="600" letter-spacing="3" font-family="Montserrat,sans-serif">RÉCUPÉRATION</text>
+            <circle cx="68" cy="268" r="5" fill="rgba(245,211,0,.2)"/>
+            <circle cx="110" cy="268" r="5" fill="rgba(245,211,0,.4)"/>
+            <circle cx="152" cy="268" r="5" fill="rgba(245,211,0,.2)"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: OMEGA 3 -->
+    <div class="slide" role="group" aria-label="Diapositive 3 sur 4">
+      <div class="slide-inner">
+        <div class="slide-content">
+          <span class="slide-badge">Santé & Bien-être</span>
+          <h2 class="slide-title">OMEGA 3</h2>
+          <p class="slide-subtitle">Les omégas 3 soutiennent la santé cardiovasculaire, réduisent l'inflammation et favorisent les fonctions cognitives et articulaires.</p>
+          <div class="slide-actions">
+            <a href="#" class="btn btn-primary">Voir le produit <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <a href="#" class="btn btn-outline">Tous les produits</a>
+          </div>
+        </div>
+        <div class="slide-image">
+          <svg class="hero-bottle" viewBox="0 0 220 300" width="220" height="300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="22" y="68" width="176" height="210" rx="22" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+            <rect x="38" y="20" width="144" height="56" rx="12" fill="#00c853" stroke="#009624" stroke-width="1.5"/>
+            <text x="110" y="54" text-anchor="middle" fill="white" font-size="13" font-weight="800" letter-spacing="2" font-family="Montserrat,sans-serif">NUTRIFORCE</text>
+            <rect x="32" y="100" width="156" height="150" rx="12" fill="rgba(255,255,255,.09)"/>
+            <text x="110" y="142" text-anchor="middle" fill="rgba(255,255,255,.4)" font-size="9" font-weight="700" letter-spacing="3.5" font-family="Montserrat,sans-serif">ACIDES GRAS</text>
+            <text x="110" y="188" text-anchor="middle" fill="white" font-size="26" font-weight="900" font-family="Montserrat,sans-serif">OMEGA 3</text>
+            <line x1="52" y1="204" x2="168" y2="204" stroke="#00c853" stroke-width="1.5"/>
+            <text x="110" y="226" text-anchor="middle" fill="rgba(255,255,255,.4)" font-size="9" font-weight="600" letter-spacing="3" font-family="Montserrat,sans-serif">SANTÉ GLOBALE</text>
+            <circle cx="68" cy="268" r="5" fill="rgba(0,200,83,.2)"/>
+            <circle cx="110" cy="268" r="5" fill="rgba(0,200,83,.4)"/>
+            <circle cx="152" cy="268" r="5" fill="rgba(0,200,83,.2)"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: 80 WHEY -->
+    <div class="slide" role="group" aria-label="Diapositive 4 sur 4">
+      <div class="slide-inner">
+        <div class="slide-content">
+          <span class="slide-badge">Protéine Premium</span>
+          <h2 class="slide-title">80 Whey Protein</h2>
+          <p class="slide-subtitle">Notre whey concentrée offre 80% de protéines par portion pour une récupération musculaire optimale après l'entraînement.</p>
+          <div class="slide-actions">
+            <a href="#" class="btn btn-primary">Voir le produit <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <a href="#" class="btn btn-outline">Tous les produits</a>
+          </div>
+        </div>
+        <div class="slide-image">
+          <svg class="hero-bottle" viewBox="0 0 220 300" width="220" height="300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="22" y="68" width="176" height="210" rx="22" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+            <rect x="38" y="20" width="144" height="56" rx="12" fill="#7b3cc0" stroke="#5a1fa8" stroke-width="1.5"/>
+            <text x="110" y="54" text-anchor="middle" fill="white" font-size="13" font-weight="800" letter-spacing="2" font-family="Montserrat,sans-serif">NUTRIFORCE</text>
+            <rect x="32" y="100" width="156" height="150" rx="12" fill="rgba(255,255,255,.09)"/>
+            <text x="110" y="135" text-anchor="middle" fill="rgba(255,255,255,.4)" font-size="9" font-weight="700" letter-spacing="3.5" font-family="Montserrat,sans-serif">80% PROTÉINES</text>
+            <text x="110" y="168" text-anchor="middle" fill="white" font-size="21" font-weight="900" font-family="Montserrat,sans-serif">80 WHEY</text>
+            <text x="110" y="193" text-anchor="middle" fill="rgba(255,255,255,.85)" font-size="15" font-weight="800" font-family="Montserrat,sans-serif">PROTEIN</text>
+            <line x1="52" y1="208" x2="168" y2="208" stroke="#7b3cc0" stroke-width="1.5"/>
+            <text x="110" y="230" text-anchor="middle" fill="rgba(255,255,255,.4)" font-size="9" font-weight="600" letter-spacing="2.5" font-family="Montserrat,sans-serif">908g · 30 PORTIONS</text>
+            <circle cx="68" cy="268" r="5" fill="rgba(123,60,192,.2)"/>
+            <circle cx="110" cy="268" r="5" fill="rgba(123,60,192,.4)"/>
+            <circle cx="152" cy="268" r="5" fill="rgba(123,60,192,.2)"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="slider-arrow next" id="sliderNext" aria-label="Suivant">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+  <div class="slider-controls" id="sliderDots" role="tablist" aria-label="Navigation du slider"></div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     STATS BAR
+     ═══════════════════════════════════════ -->
+<div class="stats-bar">
+  <div class="stats-grid">
+    <div class="stat-item"><span class="stat-number">200+</span><span class="stat-label">Produits</span></div>
+    <div class="stat-item"><span class="stat-number">50k+</span><span class="stat-label">Clients satisfaits</span></div>
+    <div class="stat-item"><span class="stat-number">15+</span><span class="stat-label">Années d'expertise</span></div>
+    <div class="stat-item"><span class="stat-number">100%</span><span class="stat-label">Qualité certifiée</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PRODUCTS
+     ═══════════════════════════════════════ -->
+<section class="section products-section">
+  <div class="container">
+    <h2 class="section-title">Nos produits</h2>
+    <p class="section-subtitle">Découvrez notre gamme complète de compléments nutritionnels de haute qualité</p>
+    <div class="products-grid">
+
+      <!-- 80 Whey Protein -->
+      <article class="product-card">
+        <div class="product-card-img">
+          <svg viewBox="0 0 140 170" width="118" height="143" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="10" y="40" width="120" height="118" rx="16" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+            <rect x="22" y="10" width="96" height="38" rx="9" fill="#00b8d9" stroke="#0090b0" stroke-width="1.5"/>
+            <text x="70" y="34" text-anchor="middle" fill="white" font-size="8.5" font-weight="800" letter-spacing="1.5" font-family="Montserrat,sans-serif">NUTRIFORCE</text>
+            <rect x="18" y="58" width="104" height="82" rx="8" fill="rgba(255,255,255,.08)"/>
+            <text x="70" y="84" text-anchor="middle" fill="rgba(255,255,255,.35)" font-size="6.5" font-weight="700" letter-spacing="2.5" font-family="Montserrat,sans-serif">80% PROTÉINES</text>
+            <text x="70" y="107" text-anchor="middle" fill="white" font-size="13" font-weight="900" font-family="Montserrat,sans-serif">80 WHEY</text>
+            <text x="70" y="122" text-anchor="middle" fill="rgba(255,255,255,.8)" font-size="10" font-weight="800" font-family="Montserrat,sans-serif">PROTEIN</text>
+            <line x1="28" y1="130" x2="112" y2="130" stroke="#00b8d9" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <div class="product-card-body"><h3 class="product-name"><a href="#">80 Whey Protein</a></h3></div>
+        <div class="product-card-foot">
+          <div><div class="price-label">Prix</div><div class="price-value">Consulter</div></div>
+          <a href="#" class="btn-details">Détails <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </article>
+
+      <!-- 80 WHEY Protein 908g -->
+      <article class="product-card">
+        <div class="product-card-img">
+          <svg viewBox="0 0 140 170" width="118" height="143" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="10" y="40" width="120" height="118" rx="16" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+            <rect x="22" y="10" width="96" height="38" rx="9" fill="#0090b0" stroke="#006d85" stroke-width="1.5"/>
+            <text x="70" y="34" text-anchor="middle" fill="white" font-size="8.5" font-weight="800" letter-spacing="1.5" font-family="Montserrat,sans-serif">NUTRIFORCE</text>
+            <rect x="18" y="58" width="104" height="82" rx="8" fill="rgba(255,255,255,.08)"/>
+            <text x="70" y="84" text-anchor="middle" fill="rgba(255,255,255,.35)" font-size="6.5" font-weight="700" letter-spacing="2.5" font-family="Montserrat,sans-serif">80% PROTÉINES</text>
+            <text x="70" y="106" text-anchor="middle" fill="white" font-size="13" font-weight="900" font-family="Montserrat,sans-serif">80 WHEY</text>
+            <text x="70" y="121" text-anchor="middle" fill="rgba(255,255,255,.8)" font-size="9" font-weight="800" font-family="Montserrat,sans-serif">PROTEIN 908g</text>
+            <line x1="28" y1="130" x2="112" y2="130" stroke="#0090b0" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <div class="product-card-body"><h3 class="product-name"><a href="#">80 WHEY Protein 908g</a></h3></div>
+        <div class="product-card-foot">
+          <div><div class="price-label">Prix</div><div class="price-value">Consulter</div></div>
+          <a href="#" class="btn-details">Détails <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </article>
+
+      <!-- BCAA -->
+      <article class="product-card">
+        <div class="product-card-img">
+          <svg viewBox="0 0 140 170" width="118" height="143" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="10" y="40" width="120" height="118" rx="16" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+            <rect x="22" y="10" width="96" height="38" rx="9" fill="#ff6900" stroke="#cc5400" stroke-width="1.5"/>
+            <text x="70" y="34" text-anchor="middle" fill="white" font-size="8.5" font-weight="800" letter-spacing="1.5" font-family="Montserrat,sans-serif">NUTRIFORCE</text>
+            <rect x="18" y="58" width="104" height="82" rx="8" fill="rgba(255,255,255,.08)"/>
+            <text x="70" y="84" text-anchor="middle" fill="rgba(255,255,255,.35)" font-size="6.5" font-weight="700" letter-spacing="2.5" font-family="Montserrat,sans-serif">ACIDES AMINÉS</text>
+            <text x="70" y="118" text-anchor="middle" fill="white" font-size="26" font-weight="900" font-family="Montserrat,sans-serif">BCAA</text>
+            <line x1="28" y1="130" x2="112" y2="130" stroke="#ff6900" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <div class="product-card-body"><h3 class="product-name"><a href="#">BCAA</a></h3></div>
+        <div class="product-card-foot">
+          <div><div class="price-label">Prix</div><div class="price-value">Consulter</div></div>
+          <a href="#" class="btn-details">Détails <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </article>
+
+      <!-- Citrulline -->
+      <article class="product-card">
+        <div class="product-card-img">
+          <svg viewBox="0 0 140 170" width="118" height="143" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="10" y="40" width="120" height="118" rx="16" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+            <rect x="22" y="10" width="96" height="38" rx="9" fill="#d040fb" stroke="#aa00cc" stroke-width="1.5"/>
+            <text x="70" y="34" text-anchor="middle" fill="white" font-size="8.5" font-weight="800" letter-spacing="1.5" font-family="Montserrat,sans-serif">NUTRIFORCE</text>
+            <rect x="18" y="58" width="104" height="82" rx="8" fill="rgba(255,255,255,.08)"/>
+            <text x="70" y="84" text-anchor="middle" fill="rgba(255,255,255,.35)" font-size="6.5" font-weight="700" letter-spacing="2.5" font-family="Montserrat,sans-serif">VASODILATATEUR</text>
+            <text x="70" y="114" text-anchor="middle" fill="white" font-size="13.5" font-weight="900" font-family="Montserrat,sans-serif">CITRULLINE</text>
+            <line x1="28" y1="126" x2="112" y2="126" stroke="#d040fb" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <div class="product-card-body"><h3 class="product-name"><a href="#">Citrulline</a></h3></div>
+        <div class="product-card-foot">
+          <div><div class="price-label">Prix</div><div class="price-value">Consulter</div></div>
+          <a href="#" class="btn-details">Détails <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </article>
+
+      <!-- Creatine -->
+      <article class="product-card">
+        <div class="product-card-img">
+          <svg viewBox="0 0 140 170" width="118" height="143" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="10" y="40" width="120" height="118" rx="16" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+            <rect x="22" y="10" width="96" height="38" rx="9" fill="#00b8d9" stroke="#0090b0" stroke-width="1.5"/>
+            <text x="70" y="34" text-anchor="middle" fill="white" font-size="8.5" font-weight="800" letter-spacing="1.5" font-family="Montserrat,sans-serif">NUTRIFORCE</text>
+            <rect x="18" y="58" width="104" height="82" rx="8" fill="rgba(255,255,255,.08)"/>
+            <text x="70" y="84" text-anchor="middle" fill="rgba(255,255,255,.35)" font-size="6.5" font-weight="700" letter-spacing="2.5" font-family="Montserrat,sans-serif">FORCE EXPLOSIVE</text>
+            <text x="70" y="113" text-anchor="middle" fill="white" font-size="14" font-weight="900" font-family="Montserrat,sans-serif">CREATINE</text>
+            <line x1="28" y1="125" x2="112" y2="125" stroke="#00b8d9" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <div class="product-card-body"><h3 class="product-name"><a href="#">Creatine</a></h3></div>
+        <div class="product-card-foot">
+          <div><div class="price-label">Prix</div><div class="price-value">Consulter</div></div>
+          <a href="#" class="btn-details">Détails <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </article>
+
+      <!-- Creatine 100 portions -->
+      <article class="product-card">
+        <div class="product-card-img">
+          <svg viewBox="0 0 140 170" width="118" height="143" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="10" y="40" width="120" height="118" rx="16" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+            <rect x="22" y="10" width="96" height="38" rx="9" fill="#00c853" stroke="#009624" stroke-width="1.5"/>
+            <text x="70" y="34" text-anchor="middle" fill="white" font-size="8.5" font-weight="800" letter-spacing="1.5" font-family="Montserrat,sans-serif">NUTRIFORCE</text>
+            <rect x="18" y="58" width="104" height="82" rx="8" fill="rgba(255,255,255,.08)"/>
+            <text x="70" y="82" text-anchor="middle" fill="rgba(255,255,255,.35)" font-size="6.5" font-weight="700" letter-spacing="2" font-family="Montserrat,sans-serif">FORCE EXPLOSIVE</text>
+            <text x="70" y="106" text-anchor="middle" fill="white" font-size="13" font-weight="900" font-family="Montserrat,sans-serif">CREATINE</text>
+            <text x="70" y="122" text-anchor="middle" fill="rgba(255,255,255,.75)" font-size="9" font-weight="700" font-family="Montserrat,sans-serif">100 PORTIONS</text>
+            <line x1="28" y1="130" x2="112" y2="130" stroke="#00c853" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <div class="product-card-body"><h3 class="product-name"><a href="#">Creatine 100 portions</a></h3></div>
+        <div class="product-card-foot">
+          <div><div class="price-label">Prix</div><div class="price-value">Consulter</div></div>
+          <a href="#" class="btn-details">Détails <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </article>
+
+      <!-- EAA -->
+      <article class="product-card">
+        <div class="product-card-img">
+          <svg viewBox="0 0 140 170" width="118" height="143" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="10" y="40" width="120" height="118" rx="16" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+            <rect x="22" y="10" width="96" height="38" rx="9" fill="#f5d300" stroke="#c9ab00" stroke-width="1.5"/>
+            <text x="70" y="34" text-anchor="middle" fill="#1a0a30" font-size="8.5" font-weight="800" letter-spacing="1.5" font-family="Montserrat,sans-serif">NUTRIFORCE</text>
+            <rect x="18" y="58" width="104" height="82" rx="8" fill="rgba(255,255,255,.08)"/>
+            <text x="70" y="84" text-anchor="middle" fill="rgba(255,255,255,.35)" font-size="6.5" font-weight="700" letter-spacing="2.5" font-family="Montserrat,sans-serif">ACIDES AMINÉS</text>
+            <text x="70" y="120" text-anchor="middle" fill="white" font-size="30" font-weight="900" font-family="Montserrat,sans-serif">EAA</text>
+            <line x1="28" y1="131" x2="112" y2="131" stroke="#f5d300" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <div class="product-card-body"><h3 class="product-name"><a href="#">EAA</a></h3></div>
+        <div class="product-card-foot">
+          <div><div class="price-label">Prix</div><div class="price-value">Consulter</div></div>
+          <a href="#" class="btn-details">Détails <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </article>
+
+      <!-- MASS -->
+      <article class="product-card">
+        <div class="product-card-img">
+          <svg viewBox="0 0 140 170" width="118" height="143" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="10" y="40" width="120" height="118" rx="16" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+            <rect x="22" y="10" width="96" height="38" rx="9" fill="#ff8f00" stroke="#cc7200" stroke-width="1.5"/>
+            <text x="70" y="34" text-anchor="middle" fill="white" font-size="8.5" font-weight="800" letter-spacing="1.5" font-family="Montserrat,sans-serif">NUTRIFORCE</text>
+            <rect x="18" y="58" width="104" height="82" rx="8" fill="rgba(255,255,255,.08)"/>
+            <text x="70" y="84" text-anchor="middle" fill="rgba(255,255,255,.35)" font-size="6.5" font-weight="700" letter-spacing="2.5" font-family="Montserrat,sans-serif">PRISE DE MASSE</text>
+            <text x="70" y="119" text-anchor="middle" fill="white" font-size="28" font-weight="900" font-family="Montserrat,sans-serif">MASS</text>
+            <line x1="28" y1="130" x2="112" y2="130" stroke="#ff8f00" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <div class="product-card-body"><h3 class="product-name"><a href="#">MASS</a></h3></div>
+        <div class="product-card-foot">
+          <div><div class="price-label">Prix</div><div class="price-value">Consulter</div></div>
+          <a href="#" class="btn-details">Détails <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </article>
+
+    </div>
+    <div class="text-center" style="margin-top:48px">
+      <a href="#" class="btn btn-primary">Voir tous les produits <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FEATURES
+     ═══════════════════════════════════════ -->
+<section class="section features-section">
+  <div class="container">
+    <h2 class="section-title" style="color:#fff">Pourquoi nous choisir ?</h2>
+    <p class="section-subtitle" style="color:rgba(255,255,255,.65)">L'excellence au service de votre performance</p>
+    <div class="features-grid">
+      <div class="feature-item">
+        <span class="feature-icon">🧬</span>
+        <h3>Formules scientifiques</h3>
+        <p>Chaque produit est développé en collaboration avec des nutritionnistes et des experts en performance sportive.</p>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">🏅</span>
+        <h3>Qualité certifiée</h3>
+        <p>Nos produits sont fabriqués dans des installations certifiées GMP avec des matières premières de premier ordre.</p>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">📊</span>
+        <h3>Transparence totale</h3>
+        <p>Composition détaillée, valeurs nutritionnelles claires et traçabilité complète de chaque ingrédient.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     TESTIMONIALS
+     ═══════════════════════════════════════ -->
+<section class="section" style="background:var(--bg)">
+  <div class="container">
+    <h2 class="section-title">Ce que disent nos clients</h2>
+    <p class="section-subtitle">Des milliers d'athlètes nous font confiance</p>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"La créatine monohydrate a transformé mes performances. Récupération plus rapide et gains de force notables en 4 semaines."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">A</div>
+          <div>
+            <div class="testimonial-name">Alexandre D.</div>
+            <div class="testimonial-role">Athlète CrossFit</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Qualité irréprochable et transparence sur la composition. Je recommande à tous mes partenaires d'entraînement."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">M</div>
+          <div>
+            <div class="testimonial-name">Marine L.</div>
+            <div class="testimonial-role">Bodybuildeuse compétitrice</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★☆</div>
+        <p class="testimonial-text">"Le rapport qualité/prix est excellent. Les produits sont efficaces et bien tolérés. Ma nutrition sportive au quotidien."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">T</div>
+          <div>
+            <div class="testimonial-name">Thomas R.</div>
+            <div class="testimonial-role">Coureur de fond</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════ -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="footer-logo">Nutri<em>force</em></span>
+      <p>Des compléments nutritionnels de haute qualité pour sportifs exigeants. Formulés avec des ingrédients premium pour des résultats optimaux.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-btn" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="YouTube">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Produits</h4>
+      <ul>
+        <li><a href="#">Tous les produits</a></li>
+        <li><a href="#">Protéines</a></li>
+        <li><a href="#">Acides Aminés</a></li>
+        <li><a href="#">Créatine</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Informations</h4>
+      <ul>
+        <li><a href="#">À propos de nous</a></li>
+        <li><a href="#">Notre laboratoire</a></li>
+        <li><a href="#">Certifications</a></li>
+        <li><a href="#">Blog &amp; Conseils</a></li>
+        <li><a href="#">Nous contacter</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Légal</h4>
+      <ul>
+        <li><a href="#">Mentions légales</a></li>
+        <li><a href="#">Politique de confidentialité</a></li>
+        <li><a href="#">Politique cookies</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Nutriforce. Tous droits réservés.</span>
+    <span>Compléments alimentaires — Non destiné aux personnes de moins de 18 ans.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* ── Slider ── */
+  var wrapper = document.getElementById('slidesWrapper');
+  var slides  = wrapper.querySelectorAll('.slide');
+  var dotsEl  = document.getElementById('sliderDots');
+  var current = 0;
+  var total   = slides.length;
+  var timer;
+
+  // Build dots
+  slides.forEach(function(_,i){
+    var d = document.createElement('button');
+    d.className = 'slider-dot' + (i===0?' active':'');
+    d.setAttribute('role','tab');
+    d.setAttribute('aria-selected', i===0 ? 'true':'false');
+    d.setAttribute('aria-label','Aller à la diapositive '+(i+1));
+    d.dataset.index = i;
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(n){
+    current = (n + total) % total;
+    wrapper.style.transform = 'translateX(-'+current*100+'%)';
+    dotsEl.querySelectorAll('.slider-dot').forEach(function(d,i){
+      d.classList.toggle('active', i===current);
+      d.setAttribute('aria-selected', i===current ? 'true':'false');
+    });
+  }
+
+  document.getElementById('sliderPrev').addEventListener('click', function(){ clearInterval(timer); goTo(current-1); startAuto(); });
+  document.getElementById('sliderNext').addEventListener('click', function(){ clearInterval(timer); goTo(current+1); startAuto(); });
+  dotsEl.addEventListener('click', function(e){
+    var d = e.target.closest('.slider-dot');
+    if(d){ clearInterval(timer); goTo(+d.dataset.index); startAuto(); }
+  });
+
+  function startAuto(){ timer = setInterval(function(){ goTo(current+1); }, 5000); }
+  startAuto();
+
+  /* ── Mobile nav ── */
+  var toggle = document.getElementById('navToggle');
+  var mobileNav = document.getElementById('mobileNav');
+  toggle.addEventListener('click', function(){
+    var open = mobileNav.classList.toggle('open');
+    toggle.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true':'false');
+    mobileNav.setAttribute('aria-hidden', open ? 'false':'true');
+  });
+})();
+</script>

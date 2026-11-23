@@ -1,0 +1,82 @@
+/* ============================================================
+   BASE — reset, global typography, layout utilities
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img  { max-width: 100%; height: auto; display: block; }
+ul   { list-style: none; }
+
+a {
+  color: var(--purple);
+  text-decoration: none;
+  transition: color var(--t);
+}
+a:hover { color: var(--cyan); }
+
+h2 {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--fg);
+}
+h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--fg);
+}
+p { margin-bottom: 1rem; }
+p:last-child { margin-bottom: 0; }
+
+/* ── Layout helpers ── */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left:  max(24px, env(safe-area-inset-left,  0px));
+  padding-right: max(24px, env(safe-area-inset-right, 0px));
+}
+
+.section {
+  padding: 80px 0;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 12px;
+}
+.section-title::after {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--cyan), var(--yellow));
+  border-radius: 2px;
+  margin: 14px auto 0;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--fg-m);
+  margin-bottom: 48px;
+  font-size: 1.05rem;
+}
+
+.text-center { text-align: center; }

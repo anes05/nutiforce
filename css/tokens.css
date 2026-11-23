@@ -1,0 +1,61 @@
+/* ============================================================
+   DESIGN TOKENS
+   Single source of truth for all colors, spacing, and effects.
+   Edit here — everything else inherits.
+   ============================================================ */
+
+:root {
+  /* Brand colors */
+  --purple:      #5a1fa8;
+  --purple-dk:   #3d1272;
+  --purple-lt:   #7b3cc0;
+  --cyan:        #00b8d9;
+  --cyan-dk:     #0090b0;
+  --yellow:      #f5d300;
+
+  /* Surfaces (light mode) */
+  --bg:          #ffffff;
+  --bg-lt:       #f4f0fa;
+  --fg:          #1a0a30;
+  --fg-m:        #6b6b80;
+  --border:      #e0d6f0;
+
+  /* Shadows (light mode) */
+  --shadow:      0 4px 24px rgba(90, 31, 168, 0.13);
+  --shadow-h:    0 8px 40px rgba(90, 31, 168, 0.25);
+
+  /* Shape */
+  --r:           12px;
+  --r-lg:        24px;
+
+  /* Motion */
+  --t:           0.28s cubic-bezier(0.4, 0, 0.2, 1);
+
+  color-scheme: light;
+}
+
+/* System dark mode */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:       #130826;
+    --bg-lt:    #1c0d36;
+    --fg:       #f0eaf8;
+    --fg-m:     #a89cbc;
+    --border:   #3a2558;
+    --shadow:   0 4px 24px rgba(0, 0, 0, 0.5);
+    --shadow-h: 0 8px 40px rgba(0, 0, 0, 0.65);
+    color-scheme: dark;
+  }
+}
+
+/* Explicit dark override */
+:root[data-theme="dark"] {
+  --bg:       #130826;
+  --bg-lt:    #1c0d36;
+  --fg:       #f0eaf8;
+  --fg-m:     #a89cbc;
+  --border:   #3a2558;
+  --shadow:   0 4px 24px rgba(0, 0, 0, 0.5);
+  --shadow-h: 0 8px 40px rgba(0, 0, 0, 0.65);
+  color-scheme: dark;
+}

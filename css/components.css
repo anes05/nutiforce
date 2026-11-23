@@ -1,0 +1,84 @@
+/* ============================================================
+   COMPONENTS — reusable UI elements shared across sections
+   ============================================================ */
+
+/* ── Buttons ── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 30px;
+  border-radius: 50px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all var(--t);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--cyan), var(--cyan-dk));
+  color: #fff;
+  border-color: var(--cyan);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--cyan-dk), var(--cyan));
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0, 184, 217, 0.35);
+}
+
+.btn-outline {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+/* Small arrow button used on product cards */
+.btn-details {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--purple);
+  color: #fff;
+  transition: all var(--t);
+}
+.btn-details svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+.btn-details:hover {
+  background: var(--purple-lt);
+  color: #fff;
+  transform: translateX(2px);
+}
+
+/* ── Badge ── */
+
+.badge {
+  display: inline-block;
+  background: var(--yellow);
+  color: var(--fg);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 5px 14px;
+  border-radius: 50px;
+  margin-bottom: 16px;
+}

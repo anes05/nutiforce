@@ -1,0 +1,83 @@
+/* ============================================================
+   PRODUCTS — grid layout and product card component
+   ============================================================ */
+
+.products-section {
+  background: var(--bg-lt);
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+/* ── Product card ── */
+
+.product-card {
+  background: var(--bg);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: all var(--t);
+  display: flex;
+  flex-direction: column;
+}
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-h);
+}
+
+/* Image area — always purple gradient background */
+.product-card-img {
+  background: linear-gradient(135deg, var(--purple-dk) 0%, var(--purple) 60%, var(--purple-lt) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  overflow: hidden;
+  padding: 16px;
+}
+.product-card-img svg {
+  transition: transform var(--t);
+}
+.product-card:hover .product-card-img svg {
+  transform: scale(1.07) translateY(-4px);
+}
+
+/* Body */
+.product-card-body {
+  padding: 18px 20px;
+  flex: 1;
+}
+
+.product-name {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--fg);
+  line-height: 1.3;
+}
+.product-name a         { color: var(--fg); }
+.product-name a:hover   { color: var(--purple); }
+
+/* Footer row */
+.product-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+}
+
+.price-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--fg-m);
+}
+.price-value {
+  font-size: 0.88rem;
+  color: var(--fg-m);
+  font-weight: 600;
+}

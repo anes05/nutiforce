@@ -1,0 +1,54 @@
+/* ============================================================
+   RESPONSIVE — all breakpoint overrides in one place
+   ============================================================ */
+
+/* ── Tablet & small desktop (≤ 900px) ── */
+@media (max-width: 900px) {
+
+  /* Hero: stack content above image */
+  .slide-inner {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    text-align: center;
+  }
+  .slide-actions   { justify-content: center; }
+  .slide-image     { order: -1; }
+  .slide-subtitle  { max-width: 100%; }
+  .hero-slider     { min-height: unset; }
+  .slide           { padding: 44px 0 68px; }
+
+  /* Stats: 2 columns */
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Features: single column */
+  .features-grid { grid-template-columns: 1fr; }
+
+  /* Testimonials: single column */
+  .testimonials-grid { grid-template-columns: 1fr; }
+
+  /* Footer: 2 columns */
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+
+/* ── Mobile (≤ 640px) ── */
+@media (max-width: 640px) {
+
+  /* Swap desktop nav for hamburger */
+  .nav-primary { display: none; }
+  .nav-toggle  { display: flex; }
+
+  /* Products: 2 columns */
+  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+
+  /* Footer: single column */
+  .footer-grid   { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+
+  /* Smaller arrows on the slider */
+  .slider-arrow  { width: 40px; height: 40px; }
+}
+
+/* ── Small phones (≤ 420px) ── */
+@media (max-width: 420px) {
+  .products-grid { grid-template-columns: 1fr; }
+}

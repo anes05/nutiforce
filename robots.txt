@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /mentions-legales.html
+Disallow: /cookies.html
+Disallow: /politique-confidentialite.html
+
+Sitemap: https://www.nutriforce.com.tn/sitemap.xml

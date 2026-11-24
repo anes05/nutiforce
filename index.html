@@ -668,7 +668,7 @@
      ============================================================ -->
 
     <section class="hero-slider" aria-label="Slider produits">
-      <button class="slider-arrow prev" aria-label="Précédent">
+      <button class="slider-arrow prev" id="sliderPrev" aria-label="Précédent">
         <svg
           width="20"
           height="20"
@@ -855,7 +855,7 @@
         </div>
       </div>
 
-      <button class="slider-arrow next" aria-label="Suivant">
+      <button class="slider-arrow next" id="sliderNext" aria-label="Suivant">
         <svg
           width="20"
           height="20"
@@ -869,38 +869,11 @@
       </button>
 
       <div
+        id="sliderDots"
         class="slider-controls"
         role="tablist"
         aria-label="Navigation du slider"
       >
-        <button
-          class="slider-dot active"
-          role="tab"
-          aria-selected="true"
-          aria-label="Aller à la diapositive 1"
-          data-index="0"
-        ></button>
-        <button
-          class="slider-dot"
-          role="tab"
-          aria-selected="false"
-          aria-label="Aller à la diapositive 2"
-          data-index="1"
-        ></button>
-        <button
-          class="slider-dot"
-          role="tab"
-          aria-selected="false"
-          aria-label="Aller à la diapositive 3"
-          data-index="2"
-        ></button>
-        <button
-          class="slider-dot"
-          role="tab"
-          aria-selected="false"
-          aria-label="Aller à la diapositive 4"
-          data-index="3"
-        ></button>
       </div>
     </section>
 
